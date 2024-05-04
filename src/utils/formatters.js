@@ -25,7 +25,7 @@ export const slugify = (val) => {
 // console.log('slug:', slug)
 /**
  * Results:
- * 
+ *
  * Original String Test: 'NguyenDev Một Lập Trình Viên'
  * Slug Result: nguyendev-mot-lap-trinh-vien
  */
