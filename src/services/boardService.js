@@ -1,4 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
+import { cloneDeep } from 'lodash'
 import { boardModel } from '~/models/boardModel'
 import ApiError from '~/utils/ApiError'
 import { slugify } from '~/utils/formatters'
@@ -38,7 +39,22 @@ const getDetais = async (boardId) => {
       throw new ApiError(StatusCodes.NOT_FOUND, 'Board not found')
     }
 
-    return board
+    // B1: Deep Clone sẽ tạo ra 1 cái mới để xử lý, không ảnh hưởng tới dữ liệu ban đầu
+    const resBoard = cloneDeep(board)
+
+    // B2: Đưa card về đúng với column của nó
+    resBoard.columns.forEach(column => {
+      // Support từ javascipt
+      // column.cards = resBoard.cards.filter(card => card.columnId.toString() === column._id.toString())
+      // Hàm equals được support từ mongodb
+      column.cards = resBoard.cards.filter(card => card.columnId.equals(column._id))
+    })
+
+    // B3: Xóa mảng cards ra khỏi board ban đầu
+
+    delete resBoard.cards
+
+    return resBoard
   } catch (error) {
     error
   }
