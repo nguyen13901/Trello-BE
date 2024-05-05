@@ -1,4 +1,6 @@
+import { StatusCodes } from 'http-status-codes'
 import { boardModel } from '~/models/boardModel'
+import ApiError from '~/utils/ApiError'
 import { slugify } from '~/utils/formatters'
 
 
@@ -27,6 +29,22 @@ const createNew = async (reqBody) => {
   }
 }
 
+const getDetais = async (boardId) => {
+  try {
+
+    const board = await boardModel.getDetais(boardId)
+
+    if (!board) {
+      throw new ApiError(StatusCodes.NOT_FOUND, 'Board not found')
+    }
+
+    return board
+  } catch (error) {
+    error
+  }
+}
+
 export const boardService = {
-  createNew
+  createNew,
+  getDetais
 }
