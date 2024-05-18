@@ -5,10 +5,10 @@ const createNew = async (req, res, next) => {
   try {
 
     // Điều hướng sang tầng service
-    const createBoard = await boardService.createNew(req.body)
+    const createdBoard = await boardService.createNew(req.body)
 
     // Trả kết quả về phía client
-    res.status(StatusCodes.CREATED).json(createBoard)
+    res.status(StatusCodes.CREATED).json(createdBoard)
   } catch (error) {
     next(error)
   }
