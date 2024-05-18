@@ -26,7 +26,7 @@ const createNew = async (reqBody) => {
 
     return getNewBoard
   } catch (error) {
-    error
+    throw error
   }
 }
 
@@ -56,7 +56,7 @@ const getDetais = async (boardId) => {
 
     return resBoard
   } catch (error) {
-    error
+    throw error
   }
 }
 
